@@ -12,10 +12,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       imports: [UtilsModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-
-        console.log(configService.get(Config.MYSQL_HOST));
-        console.log(configService.get(Config.MYSQL_USERNAME));
-        console.log(configService.get(Config.MYSQL_PASSWORD));
         return {
           type: 'mysql' as 'mysql',
           host: configService.get(Config.MYSQL_HOST),

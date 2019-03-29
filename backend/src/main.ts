@@ -6,7 +6,7 @@ async function bootstrap() {
 
   // tslint:disable-next-line:no-console
   console.log(`backend is listening: ${AppModule.port}`);
-
+  app.enableCors();
   await app.listen(AppModule.port);
 }
 bootstrap();
