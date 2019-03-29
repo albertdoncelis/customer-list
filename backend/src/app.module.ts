@@ -4,8 +4,6 @@ import { ConfigService } from './utils/config/config.service';
 import { Config } from './utils/config/config.enum';
 import { CustomersModule } from './customers/customers.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { config } from 'dotenv';
-import { createConnection } from 'net';
 
 @Module({
   imports: [
@@ -13,18 +11,24 @@ import { createConnection } from 'net';
     TypeOrmModule.forRootAsync({
       imports: [UtilsModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        type: 'mysql' as 'mysql',
-        host: configService.get(Config.MYSQL_HOST),
-        port: 3306,
-        username: configService.get(Config.MYSQL_USERNAME),
-        password: configService.get(Config.MYSQL_PASSWORD),
-        database: 'customer_list',
-        entities: [
-            __dirname + '/entities/*.entity{.ts,.js}',
-        ],
-        synchronize: true,
-      }),
+      useFactory: async (configService: ConfigService) => {
+
+        console.log(configService.get(Config.MYSQL_HOST));
+        console.log(configService.get(Config.MYSQL_USERNAME));
+        console.log(configService.get(Config.MYSQL_PASSWORD));
+        return {
+          type: 'mysql' as 'mysql',
+          host: configService.get(Config.MYSQL_HOST),
+          port: null,
+          username: configService.get(Config.MYSQL_USERNAME),
+          password: configService.get(Config.MYSQL_PASSWORD),
+          database: 'customer_list',
+          entities: [
+              __dirname + '/entities/*.entity{.ts,.js}',
+          ],
+          synchronize: true,
+        }
+      },
     }),
     CustomersModule,
   ],

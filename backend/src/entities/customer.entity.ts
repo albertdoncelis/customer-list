@@ -1,8 +1,8 @@
 import { Entity, PrimaryColumn, Column, CreateDateColumn } from 'typeorm';
 
-@Entity('Customer')
+@Entity({ name: 'customers' })
 export class Customer {
-    
+
     @PrimaryColumn()
     id: number;
 
@@ -33,5 +33,4 @@ export class Customer {
     @CreateDateColumn({name: 'updated_at', type: 'datetime'})
     updatedAt: Date;
 
-    
 }
