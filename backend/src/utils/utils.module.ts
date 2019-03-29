@@ -9,5 +9,6 @@ import { ConfigService } from './config/config.service';
     },
   ],
   exports: [ConfigService],
+
 })
 export class UtilsModule {}

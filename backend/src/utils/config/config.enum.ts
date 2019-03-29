@@ -1,4 +1,8 @@
 export enum Config {
     HOST = 'HOST',
     PORT = 'PORT',
+    MYSQL_HOST= 'MYSQL_HOST',
+    MYSQL_PORT= 'MYSQL_PORT',
+    MYSQL_USERNAME= 'MYSQL_USERNAME',
+    MYSQL_PASSWORD= 'MYSQL_PASSWORD',
 }
