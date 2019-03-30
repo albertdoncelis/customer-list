@@ -46,7 +46,7 @@ export class CustomersService {
         customer.phone = phone;
         customer.description = description;
         customer.updatedAt = new Date();
-        return this.customerRepository.save(customer);
+        return await this.customerRepository.save(customer);
     }
 
     async delete(customerId: number): Promise<Customer> {

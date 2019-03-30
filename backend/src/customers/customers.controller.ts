@@ -35,9 +35,11 @@ export class CustomersController {
     }
 
     @Put('/:customerId')
-    async saveCustomer(@Res() res: Response, @Param('customerId') customerId: number, createCustomer: CreateCustomerDTO) {
-        const customer = this.customerService.update(customerId, createCustomer);
+    async saveCustomer(
+        @Res() res: Response, @Param('customerId') customerId: number,
+        @Body() createCustomer: CreateCustomerDTO) {
 
+        const customer = await this.customerService.update(customerId, createCustomer);
         return res.status(HttpStatus.OK).json({
             success: true,
             customer,
