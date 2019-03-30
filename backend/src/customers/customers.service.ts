@@ -12,11 +12,17 @@ export class CustomersService {
     ) {}
 
     async getAll(): Promise<Customer[]> {
-        return this.customerRepository.find();
+        return this.customerRepository.find({ where: {
+           isDeleted: false,
+        }});
     }
 
     async get(customerId: number): Promise<Customer> {
-        return this.customerRepository.findOne(customerId);
+        return this.customerRepository.findOne(customerId, {
+            where: {
+                isDeleted: false,
+            },
+        });
     }
 
     async insert({ firstName, lastName, email, phone, description, address }: CreateCustomerDTO): Promise<void> {
@@ -28,5 +34,25 @@ export class CustomersService {
         customer.phone = phone;
         customer.description = description;
         this.customerRepository.save(customer);
+    }
+
+    async update(customerId: number,
+                 { firstName, lastName, email, phone, description, address }: CreateCustomerDTO): Promise<Customer> {
+        const customer = await this.customerRepository.findOne(customerId);
+        customer.firstName = firstName;
+        customer.lastName = lastName;
+        customer.address = address;
+        customer.email = email;
+        customer.phone = phone;
+        customer.description = description;
+        customer.updatedAt = new Date();
+        return this.customerRepository.save(customer);
+    }
+
+    async delete(customerId: number): Promise<Customer> {
+        const customer = await this.customerRepository.findOne(customerId);
+        customer.isDeleted = true;
+        customer.updatedAt = new Date();
+        return this.customerRepository.save(customer);
     }
 }

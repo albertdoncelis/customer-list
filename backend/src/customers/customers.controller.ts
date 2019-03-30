@@ -34,9 +34,19 @@ export class CustomersController {
         return res.status(HttpStatus.CREATED).send();
     }
 
-    // @Put('/:customerId')
-    // async saveCustomer(@Res() res: Response, @Param('customerId') customerId: number) {}
+    @Put('/:customerId')
+    async saveCustomer(@Res() res: Response, @Param('customerId') customerId: number, createCustomer: CreateCustomerDTO) {
+        const customer = this.customerService.update(customerId, createCustomer);
 
-    // @Delete('/:customerId')
-    // async deleteCustomer(@Res() res: Response, @Param('customerId') customerId: number) {}
+        return res.status(HttpStatus.OK).json({
+            success: true,
+            customer,
+        });
+    }
+
+    @Delete('/:customerId')
+    async deleteCustomer(@Res() res: Response, @Param('customerId') customerId: number) {
+        this.customerService.delete(customerId);
+        return res.status(HttpStatus.NO_CONTENT).send();
+    }
 }
